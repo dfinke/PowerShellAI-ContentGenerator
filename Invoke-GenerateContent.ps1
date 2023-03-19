@@ -82,8 +82,12 @@ $XAML = @'
         </GroupBox>
         
         <StackPanel Grid.Row="5" Grid.Column="1" Margin="3" Orientation="Horizontal">        
-            <Button x:Name="btnGetGPt3" Content="_Generate" Grid.Row="5" Grid.Column="1" Margin="3" HorizontalAlignment="Left" Width="60"/>
-            <Button x:Name="btnSave" Content="_Save" Grid.Row="5" Grid.Column="1" Margin="3" HorizontalAlignment="Left" Width="60"/>
+            <Label Content="How Many?" VerticalAlignment="Center" />
+            <TextBox x:Name="tbHowMany" Text="1" Width="30" Margin="3" VerticalAlignment="Center" />
+
+            <Button x:Name="btnGetGPt3" Content="_Generate" Margin="3" HorizontalAlignment="Left" Width="60"/>
+
+            <Button x:Name="btnSave" Content="_Save" Margin="3" HorizontalAlignment="Left" Width="60"/>
         </StackPanel>
     </Grid>
 </Window>
@@ -106,6 +110,7 @@ $cboTone = $Window.FindName("cboTone")
 $cboType = $Window.FindName("cboType")
 $btnGetGPt3 = $Window.FindName("btnGetGPt3")
 $btnSave = $Window.FindName("btnSave")
+$tbHowMany = $Window.FindName("tbHowMany")
 
 $btnSave.Add_Click({
         $Window.Cursor = [System.Windows.Input.Cursors]::Wait
@@ -119,11 +124,14 @@ $btnSave.Add_Click({
     })
 
 $btnGetGPt3.Add_Click({
+        $result = @()
         $Window.Cursor = [System.Windows.Input.Cursors]::Wait
         $Window.Title = 'Generating - {0} {1} ...' -f $cboTone.Text, $cboType.Text
         $prompt = 'Write a {0} in the style tone {1} about {2}' -f $cboType.Text, $cboTone.Text, $tbTopic.Text
-        $result = Get-GPT3Completion -prompt $prompt -max_tokens 256
-        $tbResult.Text = $result.Trim()
+        for ($i = 0; $i -lt $tbHowMany.Text; $i++) {
+            $result += Get-GPT3Completion -prompt $prompt -max_tokens 256 -temperature .7
+        }
+        $tbResult.Text = $result -join "`n"
         $Window.Title = 'PowerShell - AI Content Generator'
         $Window.Cursor = [System.Windows.Input.Cursors]::Arrow
     })
