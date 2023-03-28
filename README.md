@@ -26,7 +26,10 @@ Invoke-GenerateContent is a PowerShell script that uses Generative Pre-trained T
 <br/>
 <br/>
 
-<center><a href="https://youtu.be/r9eBLiELgH0"><img src="https://img.youtube.com/vi/r9eBLiELgH0/0.jpg" width="400"></a></center>
+<p align="center">
+<a href="https://youtu.be/r9eBLiELgH0"><img src="https://img.youtube.com/vi/r9eBLiELgH0/0.jpg" width="400"></a>
+</p>
+
 <br/>
 
 ## Usage
