@@ -1,4 +1,6 @@
 #Requires -Module PowerShellAI
+[CmdletBinding()]
+param()
 
 Add-Type -AssemblyName presentationframework
 
@@ -128,6 +130,9 @@ $btnGetGPt3.Add_Click({
         $Window.Cursor = [System.Windows.Input.Cursors]::Wait
         $Window.Title = 'Generating - {0} {1} ...' -f $cboTone.Text, $cboType.Text
         $prompt = 'Write a {0} in the style tone {1} about {2}' -f $cboType.Text, $cboTone.Text, $tbTopic.Text
+
+        Write-Verbose $prompt
+
         for ($i = 0; $i -lt $tbHowMany.Text; $i++) {
             $result += Get-GPT3Completion -prompt $prompt -max_tokens 256 -temperature .7
         }
@@ -137,4 +142,4 @@ $btnGetGPt3.Add_Click({
     })
 
 
-$Window.ShowDialog()
+$null = $Window.ShowDialog()

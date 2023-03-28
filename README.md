@@ -12,12 +12,22 @@ Invoke-GenerateContent is a PowerShell script that uses Generative Pre-trained T
 ## Requirements
 
 - PowerShell 5.1 or higher
+- PowerShellAI - `Install-Module -Name PowerShellAI`
 
 ## Installation
 
-1. Download (copy the content of) the Invoke-GenerateContent.ps1 script from the repository.
+1. Download (copy the content of) the Invoke-GenerateContent.ps1 script from this repository.
 2. Open a PowerShell window and navigate to the directory where the script is located.
 3. Run the script with the command `.\Invoke-GenerateContent.ps1`.
+
+## Video
+
+🚀 Discover the power of GPT and PowerShell combined in this incredible video! I've built a unique UI that lets you generate content like never before. Just provide a topic, choose the tone, and select the type (tweet, blog, or YouTube description). Watch as I showcase this innovative tool that streamlines content creation and saves you time. Say goodbye to writer's block and hello to endless possibilities!
+<br/>
+<br/>
+
+<center><a href="https://youtu.be/r9eBLiELgH0"><img src="https://img.youtube.com/vi/r9eBLiELgH0/0.jpg" width="400"></a></center>
+<br/>
 
 ## Usage
 
