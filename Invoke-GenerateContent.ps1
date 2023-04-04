@@ -1,6 +1,11 @@
 #Requires -Module PowerShellAI
 [CmdletBinding()]
-param()
+param(
+    [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
+    [int]$max_tokens = 256,
+    [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
+    [decimal]$temperature = .7
+)
 
 Add-Type -AssemblyName presentationframework
 
@@ -134,7 +139,7 @@ $btnGetGPt3.Add_Click({
         Write-Verbose $prompt
 
         for ($i = 0; $i -lt $tbHowMany.Text; $i++) {
-            $result += Get-GPT3Completion -prompt $prompt -max_tokens 256 -temperature .7
+            $result += Get-GPT3Completion -prompt $prompt -max_tokens $max_tokens -temperature $temperature 
         }
         $tbResult.Text = $result -join "`n"
         $Window.Title = 'PowerShell - AI Content Generator'
