@@ -89,12 +89,19 @@ $XAML = @'
         </GroupBox>
         
         <StackPanel Grid.Row="5" Grid.Column="1" Margin="3" Orientation="Horizontal">        
-            <Label Content="How Many?" VerticalAlignment="Center" />
+            <Label Content="_How Many?" VerticalAlignment="Center" />
             <TextBox x:Name="tbHowMany" Text="1" Width="30" Margin="3" VerticalAlignment="Center" />
 
             <Button x:Name="btnGetGPt3" Content="_Generate" Margin="3" HorizontalAlignment="Left" Width="60"/>
 
             <Button x:Name="btnSave" Content="_Save" Margin="3" HorizontalAlignment="Left" Width="60"/>
+
+            <Label Content="Max _Tokens" VerticalAlignment="Center" />
+            <TextBox x:Name="tbMaxTokens" Text="" Width="35" Margin="3" VerticalAlignment="Center" >
+                <TextBox.ToolTip>
+                    The maximum number of tokens to generate. By default, this is 256 or whatever you provided as an input parameter value to the script. The maximum is 2048.
+                </TextBox.ToolTip>
+            </TextBox>
         </StackPanel>
     </Grid>
 </Window>
@@ -118,6 +125,8 @@ $cboType = $Window.FindName("cboType")
 $btnGetGPt3 = $Window.FindName("btnGetGPt3")
 $btnSave = $Window.FindName("btnSave")
 $tbHowMany = $Window.FindName("tbHowMany")
+$tbMaxTokens = $Window.FindName("tbMaxTokens")
+$tbMaxTokens.Text = $max_tokens
 
 $btnSave.Add_Click({
         $Window.Cursor = [System.Windows.Input.Cursors]::Wait
@@ -139,7 +148,12 @@ $btnGetGPt3.Add_Click({
         Write-Verbose $prompt
 
         for ($i = 0; $i -lt $tbHowMany.Text; $i++) {
-            $result += Get-GPT3Completion -prompt $prompt -max_tokens $max_tokens -temperature $temperature 
+            if ($tbMaxTokens.Text -gt 0) {
+                $result += Get-GPT3Completion -prompt $prompt -max_tokens $tbMaxTokens.Text -temperature $temperature 
+            }
+            else {
+                $result += Get-GPT3Completion -prompt $prompt -max_tokens $max_tokens -temperature $temperature 
+            }
         }
         $tbResult.Text = $result -join "`n"
         $Window.Title = 'PowerShell - AI Content Generator'
